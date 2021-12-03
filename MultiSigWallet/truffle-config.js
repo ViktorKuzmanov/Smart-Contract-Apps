@@ -35,6 +35,13 @@ module.exports = {
 	 *
 	 * $ truffle test --network <network-name>
 	 */
+
+	/**
+	 this contracts_build_directory tells truffe where to put 
+	 the contract artifact when it it created when you do "migrate --reset" and
+	 deploy the smart contract to your local dev. blockchain aka ganache (the one that truffle provied us)
+	 */
+
 	contracts_build_directory: path.join(__dirname, "../frontend-multisig-wallet/src/contracts"),
 
 	networks: {
