@@ -10,14 +10,14 @@ const getWeb3 = () => {
 	// we are going to pass the url of the node that runs our development blockchain aka ganache
 	// http://127.0.0.1:9545/ in this case
 	// with this web3 object we have a connection to our local development blockchain
-	return new Web3("http://127.0.0.1:9545");
+	return new Web3("http://localhost:9545");
 };
 
 // create a contract instance - an object that is produced by web3
 // that allow you to directly interact with the smart contract to read and write data to the sc
 const getMultiSigWallet = async (web3) => {
 	// exract the networkId from the contract apstracion
-	const networkId = await web3.eth.net.geId();
+	const networkId = await web3.eth.net.getId();
 	// extract the info from the conract artifact
 	const contractDeployment = Wallet.networks[networkId];
 	// we are going to pass the ABI(json object that defines the
