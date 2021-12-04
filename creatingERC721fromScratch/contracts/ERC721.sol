@@ -12,7 +12,7 @@ contract ERC721 {
         require(owner != address(0), "Address is zero");
         return _balances[owner];
     }
-
+ 
     // Find the owner of an NFT
     function ownerOf(uint256 tokenId) public view returns(address) {
         address owner = _owners[tokenId];
@@ -47,5 +47,46 @@ contract ERC721 {
         require(_owners[tokenId] != address(0), "TokenId does not exist");
         return _tokenApprovals[tokenId];
     }
-    // return _tokenApprovals[tokenId]
+
+    event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+    // transfer ownership of an NFT
+    function transferFrom(address from, address to, uint256 tokenId) public {
+        address owner = ownerOf(tokenId);
+        require(
+            msg.sender == owner ||
+            getApproved(tokenId) == msg.sender ||
+            isApprovedForAll(owner, msg.sender),
+            "Msg.sender is not the owner or approved for transfer"
+        );
+        require(owner == from, "From address is not the owner");
+        require(to != address(0), "Address is zero");
+        require(_owners[tokenId] != address(0), "TokenId does not exist");
+        approve(address(0), tokenId);
+        _balances[from] -= 1;
+        _balances[to] += 1;
+        _owners[tokenId] = to;
+        emit Transfer(from, to, tokenId);
+    }
+
+    // this is a Standard transferFrom function but it also
+    // checks if onERC721Received is implement WHEN sending to smart contracts
+    // you need to do this check when you are sending NFT to smart contract and not to end user wallet
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public {
+        transferFrom(from, to, tokenId);
+        require(checkOnERC721Received(), "Receiver not implemented");
+    }
+    
+    // oversimplified function needs more work
+    function checkOnERC721Received() private pure returns(bool) {
+        return true;
+    }
+
+    function safeTransferFrom(address from, address to, uint256 tokenId) public {
+        safeTransferFrom(from, to, tokenId, "");
+    }
+
+    // EIP165 Query if a contract impoement another interface
+    function supportsInterface(bytes4 interfaceId) public pure virtual returns(bool) {
+        return interfaceId == 0x80ac58cd;
+    }
 }
