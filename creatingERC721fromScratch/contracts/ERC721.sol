@@ -4,7 +4,7 @@ contract ERC721 {
 
     mapping(address=>uint256) internal _balances;
     mapping(uint256=>address) internal _owners;
-    mapping(address =>  mapping(address=>bool)) _operatorApprovals; 
+    mapping(address =>  mapping(address=>bool)) private _operatorApprovals; 
 
     // Returns the number of NFTs assigned to an owner
     function balanceOf(address owner) public view returns(uint256) {
