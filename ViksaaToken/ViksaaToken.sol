@@ -34,7 +34,7 @@ contract ViksaaToken {
 
     event Approval(address owner, address spender, uint256 amount);
 
-    function approval(address spender, uint256 value) public returns(bool) {
+    function approve(address spender, uint256 value) public returns(bool) {
         allowances[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
