@@ -1,0 +1,22 @@
+{
+	"name": "Pikachu",
+	"description": "This is Pikachu",
+	"image": "https://ipfs.io/ipfs/QmQNB5j67uduYLYAHbDnme59xdvwLFLk3JnXErF66Cj9yU",
+	"attributes": [
+		{
+			"trait_type": "Power",
+			"value": 7,
+			"max_value": 10
+		},
+		{
+			"trait_type": "Balls",
+			"value": 8,
+			"max_value": 10
+		},
+		{
+			"trait_type": "Magic",
+			"value": 5,
+			"max_value": 10
+		}
+	]
+}
