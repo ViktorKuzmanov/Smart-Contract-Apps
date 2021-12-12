@@ -1,15 +1,11 @@
-# Basic Sample Hardhat Project
+# _Pokemons NFT collection_
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This is hardhat project .
 
-Try running some of the following tasks:
+It comes with
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+- a smart conract Pokemons.sol contract which represents my Pokemons NFT collection ,
+- metadata folder with the .json file metadata for this NFT collection
+- a .js script that deploys that my NFT collection Pokemons.sol contract.
+- In the hardhat config file I have specified the mumbai polygon testnet wher I deploy the smart contract\_
+- All the metadata is hosted on IPFS throught service called Pinata \*
