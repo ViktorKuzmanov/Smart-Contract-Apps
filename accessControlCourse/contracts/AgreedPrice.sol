@@ -15,7 +15,11 @@ contract AgreedPrice {
         _;
     }
 
-    function updatePrice(uint256 _price) external onlyOwner() {
+    function changeOwner(address _newOwner) external onlyOwner {
+        owner = _newOwner;
+    }
+
+    function updatePrice(uint256 _price) external onlyOwner {
         price = _price;
     }
 }
