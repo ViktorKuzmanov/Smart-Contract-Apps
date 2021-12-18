@@ -3,7 +3,7 @@ pragma solidity 0.8.9;
 
 contract AgreedPrice {
     uint256 public price;
-    address owner;
+    address public owner;
     
     constructor(uint256 _price) {
         price = _price;
