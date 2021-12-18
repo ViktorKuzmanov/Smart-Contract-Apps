@@ -28,7 +28,7 @@ describe("Access Control", function () {
     expect(await this.agreedPrice.owner()).to.eq(deployer.address);
   })
 
-  it("should NOT be possible for other then the owner to change the price", async function(){
+  it("should be possible for owner to change the price", async function(){
     // the owner is trying to set the price
     await this.agreedPrice.updatePrice(1000);
     expect(await this.agreedPrice.price()).to.eq(1000);
