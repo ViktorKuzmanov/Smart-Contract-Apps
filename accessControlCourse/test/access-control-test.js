@@ -35,20 +35,20 @@ describe("Access Control", function () {
   })
 
   it("should NOT be possible for anyone other than the owner to change the price", async function(){
-    await expect(this.agreedPrice.connect(attacker).updatePrice(1000)).to.be.revertedWith("Only owner can change the price")
+    await expect(this.agreedPrice.connect(attacker).updatePrice(1000)).to.be.revertedWith("Ownable: caller is not the owner")
   })
 
   it("should be possible for owner to transfer ownership", async function() {
-    await this.agreedPrice.changeOwner(user.address);
+    await this.agreedPrice.transferOwnership(user.address);
     expect(await this.agreedPrice.owner()).to.eq(user.address);
   })
   it("should be possible for new owner to call updatePrice/change price", async function() {
-    await this.agreedPrice.changeOwner(user.address);
+    await this.agreedPrice.transferOwnership(user.address);
     await this.agreedPrice.connect(user).updatePrice(1000);
     expect(await this.agreedPrice.price()).to.eq(1000);
   })
   it("should NOT be possible for anyone other than the owner to transfer ownership", async function() {
-    await expect(this.agreedPrice.connect(attacker).changeOwner(attacker.address)).to.be.revertedWith("Only owner can change the price");
+    await expect(this.agreedPrice.connect(attacker).transferOwnership(attacker.address)).to.be.revertedWith("Ownable: caller is not the owner");
   })
   
 });
