@@ -33,5 +33,11 @@ describe("Access Control", function () {
     await this.agreedPrice.updatePrice(1000);
     expect(await this.agreedPrice.price()).to.eq(1000);
   })
+
+  it("should NOT be possible for anyone other than the owner to change the price", async function(){
+    await expect(this.agreedPrice.connect(attacker).updatePrice(1000)).to.be.revertedWith("Only owner can change the price")
+  })
+
+
   
 });
