@@ -13,6 +13,7 @@ contract VictimContract {
     }
 
     function transfer(address _to, uint256 _amount) public {
+        // to fix this overflow error just check for "balanceOf[msg.sender] >= _amount"
         require(balanceOf[msg.sender] - _amount >= 0,"Not enough tokens");
         balanceOf[msg.sender] -= _amount;
         balanceOf[_to] += _amount;
