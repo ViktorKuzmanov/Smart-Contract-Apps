@@ -13,13 +13,13 @@ contract VictimContract {
     }
 
     function transfer(address _to, uint256 _amount) public {
-        require(balanceOf[msg.sender] - amount >= 0,"Not enough tokens");
-        balanceOf[msg.sender] = _amount;
+        require(balanceOf[msg.sender] - _amount >= 0,"Not enough tokens");
+        balanceOf[msg.sender] -= _amount;
         balanceOf[_to] += _amount;
     }
 
     function mint(uint256 amount) external {
         totalSupply += amount;
-        balanceOf[owner()] += amount;
+        balanceOf[owner] += amount;
     }
 }
