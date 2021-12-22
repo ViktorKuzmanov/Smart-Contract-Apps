@@ -29,4 +29,20 @@ describe("Testing SavingsAccount contract", function () {
       expect(await this.savingsAccount.balanceOf(user.address)).to.eq(0);
     })
   })
+
+  describe("test depositing from Investor contract (NOT externally owned account)", function() {
+    it("Should be able to deposit", async function() {
+      expect(await this.savingsAccount.balanceOf(this.investor.address)).to.eq(0);
+      await this.investor.depositIntoSavingsAccount({value: 100});
+      expect(await this.savingsAccount.balanceOf(this.investor.address)).to.eq(100);
+    })
+    
+    it("Should be able to withdraw", async function() {
+      expect(await this.savingsAccount.balanceOf(this.investor.address)).to.eq(0);
+      await this.investor.depositIntoSavingsAccount({value: 100});
+      expect(await this.savingsAccount.balanceOf(this.investor.address)).to.eq(100);
+      await this.investor.withdrawFromSavingsAccount();
+      expect(await this.savingsAccount.balanceOf(this.investor.address)).to.eq(0);
+    })
+  })
 });
