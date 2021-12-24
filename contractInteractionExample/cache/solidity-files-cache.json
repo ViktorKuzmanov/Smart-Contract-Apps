@@ -184,8 +184,8 @@
       ]
     },
     "/Users/viktorkuzmanov/Documents/Projects/Smart-Contract-Apps/contractInteractionExample/contracts/InvestorV2.sol": {
-      "lastModificationDate": 1640345778237,
-      "contentHash": "14c0a56d337e675ebe6f98cc55d15146",
+      "lastModificationDate": 1640346142274,
+      "contentHash": "8c277f2625e527c0aa2d59489eb6a860",
       "sourceName": "contracts/InvestorV2.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -218,12 +218,12 @@
       ],
       "artifacts": [
         "ISavingsAccount",
-        "Investor"
+        "InvestorV2"
       ]
     },
     "/Users/viktorkuzmanov/Documents/Projects/Smart-Contract-Apps/contractInteractionExample/contracts/SavingsAccountV2.sol": {
-      "lastModificationDate": 1640345508655,
-      "contentHash": "2be0aac7583c5a08525214ca1cff9d36",
+      "lastModificationDate": 1640346134263,
+      "contentHash": "26ebf1e42e230a13189a54b34ba806a9",
       "sourceName": "contracts/SavingsAccountV2.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -255,7 +255,7 @@
         "^0.8.9"
       ],
       "artifacts": [
-        "SavingsAccount"
+        "SavingsAccountV2"
       ]
     }
   }
