@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Address.sol";
 
-contract SavingsAccount {
+contract SavingsAccountV2 {
     using Address for address payable;
     mapping(address=>uint256) public balanceOf;
 

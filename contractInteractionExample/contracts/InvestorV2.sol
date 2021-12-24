@@ -8,7 +8,7 @@ interface ISavingsAccount {
     function withdraw() external;
 }
 
-contract Investor is Ownable {
+contract InvestorV2 is Ownable {
     // this immutable is read-only, but assignable in the constructor
     ISavingsAccount public immutable savingsAccount;
 
