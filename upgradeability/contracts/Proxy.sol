@@ -12,7 +12,7 @@ contract Proxy {
     }
 
     function upgrade(address _newContractAddress) external {
-        require(msg.sender == owner, "Accss restricted");
+        require(msg.sender == owner, "Access restricted");
         logicContract = _newContractAddress;
     }
 
