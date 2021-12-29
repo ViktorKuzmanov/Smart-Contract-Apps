@@ -41,6 +41,17 @@ describe("Upgradable Proxy pattern", function () {
       expect(await this.proxy.x()).to.eq(2);
       expect(await this.logicV2.x()).to.eq(0);
     });
+    it("Should set y", async function () {
+      await this.proxy.upgrade(this.logicV2.address);
+      await this.proxyPattern2.setY(5);
+
+      // expect(await this.proxy.owner()).to.eq("0x0000000000000000000000000000000000000005");
+
+      const byte32Y = await ethers.provider.getStorageAt(this.proxy.address, 3);
+      const y = await ethers.BigNumber.from(byte32Y);
+
+      expect(y).to.eq(5);
+    });
   })
   
 });
