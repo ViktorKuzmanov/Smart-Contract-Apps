@@ -1,19 +1,46 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("Upgradable Proxy pattern", function () {
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+  beforeEach(async function() {
+    [deployer, attacker, user] = await ethers.getSigners();
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+    const LogicV1 = await ethers.getContractFactory("LogicV1", deployer);
+    this.logicV1 = await LogicV1.deploy();
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
+    const Proxy = await ethers.getContractFactory("Proxy", deployer);
+    this.proxy = await Proxy.deploy(this.logicV1.address);
 
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
-  });
+    const LogicV2 = await ethers.getContractFactory("LogicV2", deployer);
+    this.logicV2 = await LogicV2.deploy();
+
+    this.proxyPattern = await ethers.getContractAt("LogicV1", this.proxy.address);
+    this.proxyPattern2 = await ethers.getContractAt("LogicV2", this.proxy.address);
+  })
+
+  describe("Proxy", function() {
+    it("Should return address of logicV1 when calling logicContract", async function () {
+      expect(await this.proxy.logicContract()).to.eq(this.logicV1.address);
+    });
+    it("Should revert if anyone other than the owner tries to upgrade", async function () {
+      await expect(this.proxy.connect(user).upgrade(this.logicV2.address)).to.be.revertedWith("Access restricted");
+    });
+    it("Should allow the owner to update the Logic Contract", async function () {
+      await this.proxy.upgrade(this.logicV2.address)
+      expect(await this.proxy.logicContract()).to.eq(this.logicV2.address);
+    });
+    it("Calling increaseX of LogicV1 should add 1 to x Proxy's state", async function () {
+      await this.proxyPattern.connect(user).increaseX();
+      expect(await this.proxy.x()).to.eq(1);
+      expect(await this.logicV1.x()).to.eq(0);
+    });
+    it("Calling increaseX of LogicV2 should add 2 to x Proxy's state", async function () {
+      await this.proxy.upgrade(this.logicV2.address);
+      await this.proxyPattern2.increaseX();
+      expect(await this.proxy.x()).to.eq(2);
+      expect(await this.logicV2.x()).to.eq(0);
+    });
+  })
+  
 });
