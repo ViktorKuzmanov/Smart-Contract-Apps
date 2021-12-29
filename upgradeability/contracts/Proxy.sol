@@ -2,9 +2,9 @@
 pragma solidity ^0.8.7;
 
 contract Proxy {
-    uint256 x;
-    address owner;
-    address logicContract;
+    uint256 public x;
+    address public owner;
+    address public logicContract;
 
     constructor(address _logicContract) {
         logicContract = _logicContract;
